@@ -1,11 +1,54 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/(privacy|terms)\\.html", "headers": { "Cache-Control": "public, max-age=3600" } },
-    { "src": "/(robots\\.txt|sitemap\\.xml)", "headers": { "Cache-Control": "public, max-age=3600" } },
-    { "src": "/(.*)", "dest": "/$1" }
-  ],
+
   "redirects": [
-    { "source": "/(.*)", "destination": "https://amiraq.org/$1", "permanent": false }
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.amiraq.org" }],
+      "destination": "https://amiraq.org/:path*",
+      "permanent": true
+    }
+  ],
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://wa.me https://web.whatsapp.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    },
+
+    {
+      "source": "/(index|privacy|terms)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    },
+    {
+      "source": "/(robots\\.txt|sitemap\\.xml)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/(images|icons)/:all*",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js|svg|webp|avif|png|jpg|jpeg|ico)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
   ]
 }
