@@ -1,11 +1,11 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/(privacy|terms).html", "headers": { "Cache-Control": "public, max-age=3600" } },
+    { "src": "/(privacy|terms)\\.html", "headers": { "Cache-Control": "public, max-age=3600" } },
     { "src": "/(robots\\.txt|sitemap\\.xml)", "headers": { "Cache-Control": "public, max-age=3600" } },
     { "src": "/(.*)", "dest": "/$1" }
   ],
   "redirects": [
-    { "source": "https://www.amiraq.org/:path*", "destination": "https://amiraq.org/:path*", "permanent": true }
+    { "source": "/(.*)", "destination": "https://amiraq.org/$1", "permanent": false }
   ]
 }
